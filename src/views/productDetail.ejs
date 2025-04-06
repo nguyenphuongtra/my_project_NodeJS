@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title><%= product.name %></title>
+  <link rel="stylesheet" href="/css/productDetail.css"> <!-- File CSS riêng -->
+  <!-- FontAwesome (nếu dùng icon) -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <div class="product-detail-container">
+    <!-- Cột trái: Ảnh sản phẩm -->
+    <div class="product-images">
+      <div class="main-image">
+        <% if (product.images && product.images.length > 0) { %>
+          <img
+            src="/images/<%= product.images[0] %>"
+            alt="<%= product.name %>"
+          >
+        <% } else { %>
+          <img
+            src="/images/placeholder.png"
+            alt="No Image"
+          >
+        <% } %>
+      </div>
+
+      <!-- Ảnh phụ (nếu có) -->
+      <% if (product.images && product.images.length > 1) { %>
+        <div class="thumbnail-list">
+          <% product.images.forEach((img, idx) => { %>
+            <% if (idx > 0) { %>
+              <div class="thumbnail">
+                <img src="/images/<%= img %>" alt="<%= product.name %>">
+              </div>
+            <% } %>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Cột phải: Thông tin sản phẩm -->
+    <div class="product-info">
+      <h1 class="product-name"><%= product.name %></h1>
+      <p class="product-brand">Thương hiệu: <%= product.brand || 'N/A' %></p>
+
+      <!-- Giá, rating, đã bán -->
+      <div class="price-section">
+        <span class="current-price"><%= product.price %> VND</span>
+      </div>
+      <div class="rating-and-sold">
+        <!-- Ví dụ rating cứng 4.5 -->
+        <div class="rating">
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star-half-alt"></i>
+          <span>4.5</span>
+        </div>
+        <span class="sold">Đã bán 12</span>
+      </div>
+
+      <p class="product-description"><%= product.description %></p>
+      <p class="product-stock">Tồn kho: <%= product.stock %></p>
+      <p class="product-category">Danh mục: <%= product.category ? product.category.name : 'N/A' %></p>
+
+      <!-- Chọn tùy chọn (nếu có) -->
+      <% if (product.options && product.options.sizes && product.options.sizes.length > 0) { %>
+        <div class="size-options">
+          <span>Chọn kích thước:</span>
+          <% product.options.sizes.forEach(size => { %>
+            <button class="size-btn"><%= size %></button>
+          <% }) %>
+        </div>
+      <% } %>
+
+      <!-- Form thêm vào giỏ hàng -->
+      <form action="/cart/add" method="POST" class="add-to-cart-form">
+        <input type="hidden" name="productId" value="<%= product._id %>">
+
+        <!-- Nút + và - số lượng -->
+        <div class="quantity-section">
+          <label for="quantity">Số lượng:</label>
+          <div class="qty-wrapper">
+            <button type="button" class="qty-btn" id="decreaseQty">-</button>
+            <input type="number" id="quantity" name="quantity" value="1" min="1">
+            <button type="button" class="qty-btn" id="increaseQty">+</button>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <!-- Nút thêm vào giỏ hàng -->
+          <button type="submit" class="add-cart-btn">Thêm vào Giỏ hàng</button>
+          <!-- Nút mua ngay (chuyển hướng đến thanh toán) -->
+          <a href="/order-summary" class="buy-now-btn">Mua ngay</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Sản phẩm gợi ý (5 sản phẩm) -->
+  <% if (suggestedProducts && suggestedProducts.length > 0) { %>
+    <div class="suggested-products-container">
+      <h2>Sản phẩm gợi ý</h2>
+      <div class="suggested-products-grid">
+        <% suggestedProducts.forEach(sp => { %>
+          <div class="suggested-product-card">
+            <a href="/products/<%= sp._id %>">
+              <% if (sp.images && sp.images.length > 0) { %>
+                <img src="/images/<%= sp.images[0] %>" alt="<%= sp.name %>">
+              <% } else { %>
+                <img src="/images/placeholder.png" alt="No Image">
+              <% } %>
+              <h3><%= sp.name %></h3>
+              <p class="price"><%= sp.price %> VND</p>
+            </a>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  <% } %>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    // Tăng giảm số lượng
+    const decreaseBtn = document.getElementById('decreaseQty');
+    const increaseBtn = document.getElementById('increaseQty');
+    const quantityInput = document.getElementById('quantity');
+
+    decreaseBtn.addEventListener('click', () => {
+      let currentVal = parseInt(quantityInput.value) || 1;
+      if (currentVal > 1) {
+        quantityInput.value = currentVal - 1;
+      }
+    });
+
+    increaseBtn.addEventListener('click', () => {
+      let currentVal = parseInt(quantityInput.value) || 1;
+      quantityInput.value = currentVal + 1;
+    });
+  </script>
+</body>
+</html>

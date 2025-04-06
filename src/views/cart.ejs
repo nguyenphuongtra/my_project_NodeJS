@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Giỏ hàng của bạn</title>
+  <link rel="stylesheet" href="/css/product.css">
+  <style>
+    /* Một số style tùy chỉnh cho giỏ hàng */
+    .cart-item {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border-bottom: 1px solid #ccc;
+      justify-content: space-between;
+    }
+    .cart-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-right: 15px;
+    }
+    .cart-item-details {
+      flex: 1;
+    }
+    .cart-item-details h4 {
+      margin-bottom: 5px;
+    }
+    .cart-item-details p {
+      margin: 0;
+    }
+    .quantity-controls {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 10px;
+    }
+    .quantity-controls button {
+      padding: 5px 10px;
+      background: #0d6efd;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .quantity-controls span {
+      margin: 0 8px;
+      font-size: 1rem;
+      min-width: 20px;
+      text-align: center;
+    }
+    .remove-btn {
+      padding: 5px 10px;
+      background: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .checkout-btn {
+      padding: 10px 20px;
+      background: #0d6efd;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <h2 style="text-align:center; margin-top: 20px;">Giỏ hàng của bạn</h2>
+  
+  <% if (cart.length === 0) { %>
+    <p style="text-align: center;">Giỏ hàng trống!</p>
+  <% } else { %>
+    <div style="max-width: 800px; margin: 20px auto;">
+      <% cart.forEach(item => { %>
+        <div class="cart-item">
+          <div style="display: flex; align-items: center;">
+            <% if (item.product.images && item.product.images.length > 0) { %>
+              <img src="/images/<%= item.product.images[0] %>" alt="<%= item.product.name %>">
+            <% } else { %>
+              <img src="/images/placeholder.png" alt="No Image">
+            <% } %>
+            <div class="cart-item-details">
+              <h4><%= item.product.name %></h4>
+              <p>Giá: <%= item.product.price %> VND</p>
+            </div>
+          </div>
+          <div>
+            <!-- Form cập nhật số lượng -->
+            <form action="/cart/update" method="POST" style="display: inline-block;">
+              <input type="hidden" name="productId" value="<%= item.product._id %>">
+              <div class="quantity-controls">
+                <button type="submit" name="action" value="decrease">-</button>
+                <span><%= item.quantity %></span>
+                <button type="submit" name="action" value="increase">+</button>
+              </div>
+            </form>
+            <!-- Form xoá sản phẩm -->
+            <form action="/cart/remove" method="POST" style="display: inline-block;">
+              <input type="hidden" name="productId" value="<%= item.product._id %>">
+              <button type="submit" class="remove-btn">Xoá</button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+      <!-- Form thanh toán -->
+      <form id="checkoutForm" action="order-summary" style="text-align: center;">
+        <button type="submit" class="checkout-btn">Thanh toán</button>
+      </form>
+      
+      <script>
+        document.getElementById("checkoutForm").addEventListener("submit", function(event) {
+          event.preventDefault(); // Ngăn chặn gửi form ngay lập tức
+      
+          // Kiểm tra xem user đã đăng nhập chưa
+          fetch('/api/check-login')
+            .then(response => response.json())  
+            .then(data => {
+              if (!data.loggedIn) {
+                alert("Bạn cần đăng nhập để tiến hành thanh toán.");
+                window.location.href = "/users/login";
+              } else {
+                event.target.submit(); // Nếu đã đăng nhập, tiếp tục thanh toán
+              }
+            })
+            .catch(error => console.error("Lỗi khi kiểm tra đăng nhập:", error));
+        });
+      </script>
+      
+    </div>
+  <% } %>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

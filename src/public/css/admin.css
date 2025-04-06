@@ -1,0 +1,126 @@
+/* Reset cơ bản */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  .admin-dashboard {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+  }
+  
+  .admin-dashboard h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Navigation Admin */
+  .admin-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .admin-nav ul li a {
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: #0d6efd;
+    transition: color 0.3s ease;
+  }
+  
+  .admin-nav ul li a:hover {
+    color: #0056b3;
+  }
+  
+  /* Admin Sections */
+  .admin-section {
+    margin-bottom: 40px;
+  }
+  
+  .admin-section h2 {
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+  }
+  
+  /* Button Thêm sản phẩm */
+  .btn-add {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    background: #28a745;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  
+  .btn-add:hover {
+    background: #218838;
+  }
+  
+  /* Table quản lý */
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: auto;
+  }
+  
+  .admin-table th,
+  .admin-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .admin-table th {
+    background: #f8f8f8;
+    color: #333;
+  }
+  
+  /* Nút hành động trong bảng */
+  .btn-edit,
+  .btn-delete,
+  .btn-view {
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+  }
+  
+  .btn-edit {
+    background: #0d6efd;
+    color: #fff;
+    margin-right: 5px;
+  }
+  
+  .btn-edit:hover {
+    background: #0056b3;
+  }
+  
+  .btn-delete {
+    background: #dc3545;
+    color: #fff;
+  }
+  
+  .btn-delete:hover {
+    background: #c82333;
+  }
+  
+  .btn-view {
+    background: #17a2b8;
+    color: #fff;
+  }
+  
+  .btn-view:hover {
+    background: #138496;
+  }
+  

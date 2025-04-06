@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tóm tắt đơn hàng</title>
+  <link rel="stylesheet" href="/css/order.css">
+</head>
+<body>
+
+  <%- include('partials/header') %>
+
+  <div class="order-summary-container">
+    <h1>Tóm tắt đơn hàng</h1>
+
+    <!-- Bảng hiển thị sản phẩm -->
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th>Sản phẩm</th>
+          <th>Đơn giá</th>
+          <th>Số lượng</th>
+          <th>Thành tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% cart.forEach(item => { %>
+          <tr>
+            <td class="product-info">
+              <img src="/images/<%= item.product.images[0] %>" alt="<%= item.product.name %>">
+              <span><%= item.product.name %></span> 
+            </td>
+            <td><%= item.product.price %> VND</td>
+            <td><%= item.quantity %></td>
+            <td><%= item.product.price * item.quantity %> VND</td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <!-- Tổng tiền -->
+    <div class="order-total">
+      <p>Tổng tiền hàng: <strong><%= totalPrice %> VND</strong></p>
+      <p>Phí vận chuyển: <strong>30,000 VND</strong></p>
+      <p class="final-price">Tổng thanh toán: <strong><%= totalPrice + 30000 %> VND</strong></p>
+    </div>
+
+    <!-- Nút hành động -->
+    <div class="order-actions">
+      <a href="/cart" class="back-btn">Quay lại Giỏ hàng</a>
+      <a href="/checkout" class="checkout-btn">Xác nhận Thanh toán</a>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+
+</body>
+</html>

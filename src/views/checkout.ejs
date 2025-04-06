@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thanh toán</title>
+  <link rel="stylesheet" href="/css/checkout.css">
+  <!-- FontAwesome nếu cần icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <div class="checkout-container">
+    <h1 class="checkout-title">Thanh toán</h1>
+    
+    <div class="checkout-content">
+      <!-- Phần thông tin giao hàng -->
+      <div class="shipping-info">
+        <h2>Thông tin giao hàng</h2>
+        <form id="shippingForm" action="/checkout" method="POST">
+          <div class="form-group">
+            <label for="fullname">Họ và tên</label>
+            <input type="text" id="fullname" name="fullname" placeholder="Nhập họ và tên của bạn" required>
+          </div>
+          <div class="form-group">
+            <label for="address">Địa chỉ giao hàng</label>
+            <input type="text" id="address" name="address" placeholder="Nhập địa chỉ giao hàng" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Số điện thoại</label>
+            <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại liên hệ" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Nhập email liên hệ" required>
+          </div>
+        </form>
+      </div>
+
+      <!-- Phần tóm tắt đơn hàng -->
+      <div class="order-summary">
+        <h2>Tóm tắt đơn hàng</h2>
+        <table class="order-table">
+          <thead>
+            <tr>
+              <th>Sản phẩm</th>
+              <th>Số lượng</th>
+              <th>Thành tiền</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (cart && cart.length > 0) { %>
+              <% cart.forEach(item => { %>
+                <tr>
+                  <td>
+                    <div class="summary-product">
+                      <% if (item.product.images && item.product.images.length > 0) { %>
+                        <img src="/images/<%= item.product.images[0] %>" alt="<%= item.product.name %>">
+                      <% } else { %>
+                        <img src="/images/placeholder.png" alt="No Image">
+                      <% } %>
+                      <span><%= item.product.name %></span>
+                    </div>
+                  </td>
+                  <td><%= item.quantity %></td>
+                  <td><%= item.product.price * item.quantity %> VND</td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <tr>
+                <td colspan="3" style="text-align:center;">Giỏ hàng trống</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+
+        <div class="order-totals">
+          <p>Tổng tiền hàng: <strong><%= totalPrice %> VND</strong></p>
+          <p>Phí vận chuyển: <strong>30,000 VND</strong></p>
+          <p class="final-total">Tổng thanh toán: <strong><%= totalPrice + 30000 %> VND</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phần chọn hình thức thanh toán -->
+    <div class="payment-method">
+      <h2>Phương thức thanh toán</h2>
+      <div class="payment-options">
+        <label>
+          <input type="radio" name="payment" value="cod" checked> Thanh toán khi nhận hàng (COD)
+        </label>
+        <label>
+          <input type="radio" name="payment" value="credit_card"> Thẻ tín dụng/ghi nợ
+        </label>
+        <label>
+          <input type="radio" name="payment" value="e_wallet"> Ví điện tử
+        </label>
+      </div>
+    </div>
+
+    <!-- Nút xác nhận thanh toán -->
+    <div class="checkout-actions">
+      <a href="/cart" class="back-btn">Quay lại Giỏ hàng</a>
+      <button form="shippingForm" type="submit" class="confirm-btn">Xác nhận Thanh toán</button>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

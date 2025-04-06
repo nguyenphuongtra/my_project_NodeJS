@@ -1,0 +1,104 @@
+<%- include('partials/header') %>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+      <h1>Chào mừng đến với NexTech</h1>
+      <p>Khám phá các sản phẩm công nghệ và nhiều hơn thế nữa.</p>
+      <h1 style="font-size: 60px; margin-top: 200px;">Siêu giảm giá</h1>
+      <p>Web công nghệ | Sản phẩm chính hãng | Giá cả cạnh tranh</p>
+      <a href="/products" class="btn">Xem sản phẩm</a>
+    </div>
+</section>
+  
+<!-- Featured Products Section -->
+<section class="featured-products">
+  <div class="container">
+    <h2>Sản phẩm nổi bật</h2>
+    <div class="product-grid">
+      <% if (products && products.length) { %>
+        <% products.forEach(function(product) { %>
+          <div class="product-card">
+            <a href="/products/<%= product._id %>" style="text-decoration: none;">
+              <% if (product.images && product.images.length > 0) { %>
+                <img src="/images/<%= product.images[0] %>" alt="<%= product.name %>">
+              <% } else { %>
+                <img src="/images/slide1.jpg" alt="No Image">
+              <% } %>
+              <h3><%= product.name %></h3>
+              <p class="price" style="color: red;">Giá: <%= product.price %> VND</p>
+            </a>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>Không có sản phẩm nổi bật.</p>
+      <% } %>
+    </div>
+    <div class="btn-wrapper">
+      <a href="/products" class="btn">Xem tất cả sản phẩm</a>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Section (Nếu có) -->
+<% if (categories && categories.length) { %>
+<section class="categories">
+  <div class="container">
+    <h2>Danh mục sản phẩm</h2>
+    <div class="category-grid">
+      <% categories.forEach(function(category) { %>
+        <div class="category-card" >
+          <a href="/products?category=<%= category._id %>"style="text-decoration: none;">
+            <h3><%= category.name %></h3>
+            <p><%= category.description %></p>
+          </a>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- About Section -->
+<section class="about">
+</section>
+<section class="benefits">
+  <div class="benefits-container">
+    <!-- Cột 1: Thương hiệu đảm bảo -->
+    <div class="benefit-item">
+      <div class="benefit-icon">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+      <h3>Thương hiệu đảm bảo</h3>
+      <p>Nhập khẩu, bảo hành chính hãng</p>
+    </div>
+
+    <!-- Cột 2: Đổi trả dễ dàng -->
+    <div class="benefit-item">
+      <div class="benefit-icon">
+        <i class="fas fa-truck"></i>
+      </div>
+      <h3>Đổi trả dễ dàng</h3>
+      <p>Theo chính sách đổi trả tại NexTech</p>
+    </div>
+
+    <!-- Cột 3: Sản phẩm chất lượng -->
+    <div class="benefit-item">
+      <div class="benefit-icon">
+        <i class="fas fa-sync-alt"></i>
+      </div>
+      <h3>Sản phẩm chất lượng</h3>
+      <p>Đảm bảo tương thích với độ bền cao</p>
+    </div>
+
+    <!-- Cột 4: Giao hàng tận nơi -->
+    <div class="benefit-item">
+      <div class="benefit-icon">
+        <i class="fas fa-star"></i>
+      </div>
+      <h3>Giao hàng tận nơi</h3>
+      <p>Tại 63 tỉnh thành</p>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

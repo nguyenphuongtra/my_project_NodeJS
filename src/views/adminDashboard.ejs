@@ -1,0 +1,89 @@
+<%- include('partials/header') %>
+
+<div class="admin-dashboard">
+  <h1>Admin Dashboard</h1>
+
+  <nav class="admin-nav">
+    <ul>
+      <li><a href="/admin/products">Quản lý Sản phẩm</a></li>
+      <li><a href="/admin/orders">Quản lý Đơn hàng</a></li>
+      <li><a href="/admin/categories">Quản lý Danh mục</a></li>
+      <li><a href="/admin/users">Quản lý Người dùng</a></li>
+    </ul>
+  </nav>
+
+  <section class="admin-section">
+    <h2>Danh sách Sản phẩm</h2>
+    <a href="/admin/products/add" class="btn-add">Thêm Sản phẩm Mới</a>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Tên Sản phẩm</th>
+          <th>Giá</th>
+          <th>Số lượng tồn</th>
+          <th>Danh mục</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (products && products.length > 0) { %>
+          <% products.forEach(product => { %>
+            <tr>
+              <td><%= product.name %></td>
+              <td><%= product.price %> VND</td>
+              <td><%= product.stock %></td>
+              <td><%= product.category ? product.category.name : 'N/A' %></td>
+              <td>
+                <a href="/admin/products/edit/<%= product._id %>" class="btn-edit">Sửa</a>
+                <a href="/admin/products/delete/<%= product._id %>" class="btn-delete" onclick="return confirm('Bạn có chắc muốn xoá sản phẩm này?');">Xoá</a>
+              </td>
+            </tr>
+          <% }); %>
+        <% } else { %>
+          <tr>
+            <td colspan="5" style="text-align:center;">Không có sản phẩm nào</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </section>
+
+
+  <section class="admin-section">
+    <h2>Danh sách Đơn hàng</h2>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Mã Đơn hàng</th>
+          <th>Khách hàng</th>
+          <th>Tổng tiền</th>
+          <th>Trạng thái</th>
+          <th>Ngày tạo</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (orders && orders.length > 0) { %>
+          <% orders.forEach(order => { %>
+            <tr>
+              <td><%= order._id %></td>
+              <td><%= order.user ? order.user.name : 'N/A' %></td>
+              <td><%= order.totalAmount %> VND</td>
+              <td><%= order.status %></td>
+              <td><%= order.createdAt.toLocaleDateString() %></td>
+              <td>
+                <a href="/admin/orders/<%= order._id %>" class="btn-view">Xem chi tiết</a>
+              </td>
+            </tr>
+          <% }); %>
+        <% } else { %>
+          <tr>
+            <td colspan="6" style="text-align:center;">Không có đơn hàng nào</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<%- include('partials/footer') %>

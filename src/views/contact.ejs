@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Liên hệ</title>
+  <!-- FontAwesome (nếu cần icon) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Liên kết file CSS riêng cho trang contact -->
+  <link rel="stylesheet" href="/css/contact.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-info">
+        <h2>NexTech</h2>
+        <p>Mọi thắc mắc quý khách vui lòng liên hệ trực tiếp với chúng tôi thông qua thông tin bên dưới hoặc quý khách có thể điền thông tin ở form bên cạnh. Chúng tôi sẽ liên hệ giải đáp thắc mắc tới quý khách một cách sớm nhất.</p>
+        
+        <ul>
+          <li>
+            <i class="fa-solid fa-location-dot"></i>
+            33 Xô Viết Nghệ Tĩnh, Hòa Cường Nam, Hải Châu, Đà Nẵng
+          </li>
+          <li>
+            <i class="fa-solid fa-envelope"></i>
+            nguyenphuongtra@gmail.com
+          </li>
+          <li>
+            <i class="fa-solid fa-phone"></i>
+            0365480142
+          </li>
+        </ul>
+      </div>
+      <div class="contact-form">
+        <form id="contactForm">
+          <input type="text" name="name" placeholder="Họ tên..." />
+          <input type="email" name="email" placeholder="Địa chỉ email..." />
+          <input type="text" name="phone" placeholder="Số điện thoại..." />
+          <textarea name="message" placeholder="Nội dung liên hệ..."></textarea>
+          <button type="submit">Gửi liên hệ</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    // Bắt sự kiện submit form
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault(); // Ngăn chặn form gửi ngay
+
+      // Lấy giá trị các trường
+      const name = this.name.value.trim();
+      const email = this.email.value.trim();
+      const phone = this.phone.value.trim();
+      const message = this.message.value.trim();
+
+      // Kiểm tra dữ liệu đơn giản
+      if (!name) {
+        alert("Vui lòng nhập họ tên.");
+        return;
+      }
+      if (!email) {
+        alert("Vui lòng nhập email.");
+        return;
+      }
+      if (!phone) {
+        alert("Vui lòng nhập số điện thoại.");
+        return;
+      }
+      if (!message) {
+        alert("Vui lòng nhập nội dung liên hệ.");
+        return;
+      }
+
+      // Nếu mọi thứ hợp lệ, hiển thị thông báo
+      alert("Cảm ơn bạn đã liên hệ với chúng tôi. Chúng tôi sẽ liên hệ giải đáp thắc mắc tới quý khách một cách sớm nhất.");
+      this.reset();
+    });
+  </script>
+</body>
+</html>
