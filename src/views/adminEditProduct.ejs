@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Sửa Sản phẩm</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main class="admin-section">
+    <h2>Sửa Sản phẩm</h2>
+    <form action="/admin/products/edit/<%= product._id %>" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name">Tên Sản phẩm:</label>
+        <input type="text" id="name" name="name" value="<%= product.name %>" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Mô tả:</label>
+        <textarea id="description" name="description" required><%= product.description %></textarea>
+      </div>
+      <div class="form-group">
+        <label for="price">Giá (VND):</label>
+        <input type="number" id="price" name="price" value="<%= product.price %>" required>
+      </div>
+      <div class="form-group">
+        <label for="stock">Số lượng tồn:</label>
+        <input type="number" id="stock" name="stock" value="<%= product.stock %>" required>
+      </div>
+      <div class="form-group">
+        <label for="brand">Thương hiệu:</label>
+        <input type="text" id="brand" name="brand" value="<%= product.brand %>">
+      </div>
+      <div class="form-group">
+        <label for="category">Danh mục:</label>
+        <select id="category" name="category" required>
+          <% categories.forEach(cat => { %>
+            <option value="<%= cat._id %>" <%= product.category.equals(cat._id) ? 'selected' : '' %>><%= cat.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="images">Ảnh sản phẩm (chọn nếu muốn thay đổi):</label>
+        <input type="file" id="images" name="images" accept="image/*" multiple>
+      </div>
+      <button type="submit" class="btn-submit">Cập nhật Sản phẩm</button>
+    </form>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

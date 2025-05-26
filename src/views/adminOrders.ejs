@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý Đơn hàng</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main class="admin-section">
+    <h2>Danh sách Đơn hàng</h2>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Mã Đơn hàng</th>
+          <th>Khách hàng</th>
+          <th>Tổng tiền</th>
+          <th>Trạng thái</th>
+          <th>Ngày tạo</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (orders.length === 0) { %>
+          <tr>
+            <td colspan="6" style="text-align:center;">Không có đơn hàng nào</td>
+          </tr>
+        <% } else { %>
+          <% orders.forEach(order => { %>
+            <tr>
+              <td><%= order._id %></td>
+              <td><%= order.user ? order.user.name : 'N/A' %></td>
+              <td><%= order.totalAmount %> VND</td>
+              <td><%= order.status %></td>
+              <td><%= order.createdAt.toLocaleDateString() %></td>
+              <td>
+                <a href="/admin/orders/<%= order._id %>" class="btn-view">Xem chi tiết</a>
+                <!-- Bạn có thể thêm dropdown để thay đổi trạng thái đơn hàng tại đây -->
+              </td>
+            </tr>
+          <% }) %>
+        <% } %>
+      </tbody>
+    </table>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

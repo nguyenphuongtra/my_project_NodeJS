@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quản lý Danh mục</title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main class="admin-section">
+    <h2>Quản lý Danh mục</h2>
+    <div class="action-bar">
+      <a href="/admin/categories/add" class="btn-add">Thêm Danh mục Mới</a>
+    </div>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Tên Danh mục</th>
+          <th>Mô tả</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (categories.length === 0) { %>
+          <tr>
+            <td colspan="3" style="text-align:center;">Không có danh mục nào</td>
+          </tr>
+        <% } else { %>
+          <% categories.forEach(category => { %>
+            <tr>
+              <td><%= category.name %></td>
+              <td><%= category.description %></td>
+              <td>
+                <a href="/admin/categories/edit/<%= category._id %>" class="btn-edit">Sửa</a>
+                <a href="/admin/categories/delete/<%= category._id %>" class="btn-delete" onclick="return confirm('Bạn có chắc muốn xoá danh mục này?');">Xoá</a>
+              </td>
+            </tr>
+          <% }) %>
+        <% } %>
+      </tbody>
+    </table>
+  </main>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
