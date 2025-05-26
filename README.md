@@ -26,7 +26,7 @@ NexTech là một nền tảng thương mại điện tử đơn giản được
    - MongoDB (chạy local tại `mongodb://localhost:27017/ecommerce`)
 2. **Clone dự án:**
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/nguyenphuongtra/my_project_NodeJS.git
    cd Project_team/src
    ```
 3. **Cài đặt package:**
@@ -75,8 +75,8 @@ Project_team/
 
 ## Tài khoản mẫu
 - **Admin:**
-  - Email: `admin@example.com`
-  - Password: `admin123`
+  - Email: `admin@gmail.com`
+  - Password: `admin1`
 - **Khách hàng:**
   - Đăng ký mới hoặc sử dụng email bất kỳ.
 
@@ -92,3 +92,5 @@ Mọi đóng góp, báo lỗi hoặc ý tưởng mới đều được hoan ngh�
 
 ---
 **© 2025 NexTech Team**
+Tác giả: Nguyen Phuong Tra
+Email: Nguyenthanhtra.240805@gmail.com
